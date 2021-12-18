@@ -1,0 +1,116 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<h1>Sample ...</h1>
+
+<div class="row">
+    <div class="col-sm-1" style="width:400px">
+        <canvas id="mychart"></canvas>
+    </div>
+    <div class="col-sm-1" style="width:400px">
+        <canvas id="chart"></canvas>
+    </div>
+</div>
+
+<script type="text/javascript" src="Chart.js"></script> 
+<script type="text/javascript">  
+ 
+window.onload = function(){
+    
+    // 棒グラフ(下部)の項目名    
+    var labels = ["1983年","1984年","1985年","1986年","1987年","1988年","1989年","1990年","1991年","1992年","1993年","1994年","1995年","1996年","1997年","1998年","1999年","2000年","2001年","2002年","2003年","2004年","2005年","2006年","2007年","2008年","2009年","2010年","2011年","2012年","2013年","2014年","2015年","2016年"];
+    // 棒グラフ(左)のラベル
+    var label1 = '東京都平均';
+    // 棒グラフ(右)のラベル
+    var label2 = '品川区';
+    // 棒グラフ(左)のデータ
+    var data1  = [148.3,211.9,344.2,491.2,738.1,859.2,836.8,845.7,849.3,774.7,614.3,414.9,320.2,258.9,227.3,216.1,200.8,189.3,181.7,194,188.4,185,184.5,190.7,223.8,263.7,245,217.4,213.3,208.5,206.7,215.9,225.1,226.8];
+    // 棒グラフ(右)のデータ
+    var data2  = [195.7,211.6,227.8,270.2,1660.8,1500.8,1482.6,1503.6,1500.3,1353.4,798,717.8,492.7,399.8,329.7,308.9,290.4,309.4,294.6,287,280.8,276.4,273.8,291.1,351.9,412.1,364.8,332.1,317.1,311.8,298.4,310.7,324.5,318.6];
+    
+    // グラフデータの設定
+    var config = {
+          labels   : labels,
+          datasets : [
+                       {
+                          label                : label1,  
+                          backgroundColor      : "rgba(240,128,128,0.6)",  
+                          borderColor          : "rgba(240,128,128,0.9)",  
+                          hoverBackgroundColor : "rgba(255,64,64,0.75)",   
+                          hoverBorderColor     : "rgba(255,64,64,1)",      
+                          data   : data1,
+                          hidden : false                      
+                       },
+                       {
+                          label                : label2,  
+                          backgroundColor      : "rgba(151,187,205,0.6)",
+                          borderColor          : "rgba(151,187,205,0.9)",
+                          hoverBackgroundColor : "rgba(64,96,255,0.75)",
+                          hoverBorderColor     : "rgba(64,96,255,1)",
+                          data   : data2,
+                          hidden : false                      
+                       }
+                     ]
+    };    
+    
+    // グラフの生成
+    var ctx = document.getElementById("chart").getContext("2d");
+    var chart_obj = new Chart(ctx, {type: "bar",data: config,
+          options: {
+            responsive : true,
+            scales     : { yAxes: [{
+                             ticks: {
+                                callback: function(value){
+                                  return value+"万円";
+                                }
+                             }
+                          }]
+                        }
+          }
+        });
+  }
+</script>
+
+
+
+
+
+
+
+<script>
+  var ctx = document.getElementById('mychart');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      datasets: [{
+        label: 'Red',
+        data: [20, 35, 40, 30, 45, 35, 40],
+        borderColor: '#f88',
+      }, {
+        label: 'Green',
+        data: [20, 15, 30, 25, 30, 40, 35],
+        borderColor: '#484',
+      }, {
+        label: 'Blue',
+        data: [30, 25, 10, 5, 25, 30, 20],
+        borderColor: '#48f',
+      }],
+    },
+    options: {
+      y: {
+        min: 0,
+        max: 60,
+      },
+    },
+  });
+  </script>
+
+
+{% else %}
+<h1>This Area Is Member Only!</h1>
+{% endif %}
+
+{% endblock %}

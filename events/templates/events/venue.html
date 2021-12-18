@@ -1,0 +1,39 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+<center>
+
+<h1>Venues</h1>
+
+</br>
+<table class="table table-hover">
+{% for venue in venues %}
+<tr>
+    <td>
+        <a href="{% url 'show-venue' venue.id %}">
+        {{ venue }}</a>
+    </td>    
+    <td align="right"><a class="btn btn-secondary" href="{% url 'update-venue' venue.id %}">update</a><a class="btn btn-danger" href="{% url 'delete-venue' venue.id %}">delete</a></td>
+</tr>
+{% endfor %}
+</table>
+<br><br>
+
+<!-- 前へ の部分 -->
+{% if venues.has_previous %}
+    <a href="?page={{ venues.previous_page_number }}"> 前へ </a>
+{% endif %}
+ <!-- 1/3 の部分 -->
+ {{ venues.number }}/{{ venues.paginator.num_pages }}
+
+ <!-- 次へ の部分 -->
+ {% if venues.has_next %}
+     <a href="?page={{ venues.next_page_number }}"> 次へ </a>
+ {% endif %}
+
+
+
+<center/> 
+{% endblock %}
+
